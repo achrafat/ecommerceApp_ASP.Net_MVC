@@ -11,6 +11,7 @@ namespace eTickets.Data
         }
         protected override void  OnModelCreating(ModelBuilder modelBuilder) {
 
+            modelBuilder.Entity<Movie>().Property(m => m.Price).HasColumnType("decimal(18, 2)");
             modelBuilder.Entity<Actor_Movie>().HasKey(am => new
             {
                 am.ActorId,
