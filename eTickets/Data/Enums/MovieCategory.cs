@@ -9,6 +9,8 @@
         Horror,
         Mystery,
         Romance,
-        Thriller
+        Thriller,
+        Cartoon,
+        Documentary
     }
 }

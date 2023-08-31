@@ -1,5 +1,6 @@
 using eTickets.Data;
 using Microsoft.EntityFrameworkCore;
+using static System.Formats.Asn1.AsnWriter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +10,11 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(buil
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddScoped<AppDbInitializer>();
 var app = builder.Build();
 
+
+    app.UseItToSeedSqlServer();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -32,3 +35,25 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+internal static class DbInitializerExtension
+{
+    public static IApplicationBuilder UseItToSeedSqlServer(this IApplicationBuilder app)
+    {
+        ArgumentNullException.ThrowIfNull(app, nameof(app));
+
+        using var scope = app.ApplicationServices.CreateScope();
+        var services = scope.ServiceProvider;
+        try
+        {
+            var context = services.GetRequiredService<AppDbContext>();
+            AppDbInitializer.Seed(context);
+        }
+        catch (Exception ex)
+        {
+
+        }
+
+        return app;
+    }
+}
