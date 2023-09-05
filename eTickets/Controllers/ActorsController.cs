@@ -40,5 +40,35 @@ namespace eTickets.Controllers
             return View(actorDetails);
             
         }
+        public IActionResult Edit(int id)
+        {
+           var actorDetails=_service.GetById(id);
+            if(actorDetails == null) { View("Not Found"); }
+            return View(actorDetails);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, [Bind("ActorId", "ProfilePictureURL,FullName,Bio")] Actor newActor)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(newActor);
+            }
+            _service.Upadate(id,newActor);
+            return RedirectToAction("Index");
+        }
+        public IActionResult Delete(int id)
+        {
+            var actorDetails = _service.GetById(id);
+            if (actorDetails == null) { View("Not Found"); }
+            return View(actorDetails);
+        }
+        [HttpPost,ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var actorDetails = _service.GetById(id);
+            if (actorDetails == null) { View("Not Found"); }
+            _service.Delete(id);
+            return RedirectToAction("Index");
+        }
     }
 }

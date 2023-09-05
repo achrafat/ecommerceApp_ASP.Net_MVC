@@ -19,7 +19,8 @@ namespace eTickets.Data.services
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            _context.Remove(id);
+            _context.SaveChanges();
         }
 
         public async Task<IEnumerable<Actor>> GetAll()
