@@ -1,4 +1,5 @@
 using eTickets.Data;
+using eTickets.Data.services;
 using Microsoft.EntityFrameworkCore;
 using static System.Formats.Asn1.AsnWriter;
 
@@ -11,6 +12,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(buil
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<AppDbInitializer>();
+builder.Services.AddScoped<IActorsService,ActorsService>();
 var app = builder.Build();
 
 
