@@ -30,7 +30,8 @@ namespace eTickets.Data.services
 
        public  Actor GetById(int id)
         {
-            throw new NotImplementedException();
+            var result=_context.Actors.FirstOrDefault(n=>n.ActorId==id);
+            return result;
         }
 
        public Actor Upadate(int id, Actor newActor)
