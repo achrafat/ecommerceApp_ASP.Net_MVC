@@ -36,7 +36,9 @@ namespace eTickets.Data.services
 
        public Actor Upadate(int id, Actor newActor)
         {
-            throw new NotImplementedException();
+           _context.Update(newActor);
+            _context.SaveChanges();
+            return newActor;
         }
 
     }
